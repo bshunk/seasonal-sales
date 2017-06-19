@@ -1,15 +1,28 @@
 console.log("Yup, it loaded");
 
+let products = null;
+let categories = null;
 // get products
-function displayProducts() {
-	let prodArr = JSON.parse(event.target.responseText).products;
-	console.log("products array", prodArr);
+
+function buildCard(prodObj) {
+	let card = `<div class="prodCard">
+								<h2>${prodObj.name}</h2>
+								<h3>${prodObj.dept}</h3>
+								<p>${prodObj.price}</p>
+							</div>`;
+	return card;
 };
 
-function displayCategories(){
-	let catArr = JSON.parse(event.target.responseText).categories;
-	console.log("category array", catArr);
-}
+let tempObj = {name: "Ferby", dept: "Toys", price: 12.75,}
+console.log("card", buildCard(tempObj)); 
+
+function displayProducts() {
+	products = JSON.parse(event.target.responseText).products;
+};
+
+function displayCategories() {
+	categories = JSON.parse(event.target.responseText).categories;
+};
 
 function getCategories() {
 	let reqCategories = new XMLHttpRequest();
@@ -27,8 +40,9 @@ function getProducts() {
 getProducts();
 getCategories();
 
-
 // get categories
+console.log("Products?", products);
+
 
 
 
