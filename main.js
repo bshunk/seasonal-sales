@@ -2,6 +2,20 @@ console.log("Yup, it loaded");
 
 let products = null;
 let categories = null;
+let productWrapper = document.getElementById('product-wrapper');
+
+// TIDI fybctuib to populate DOM
+function displayProducts(productArr) {
+	let cardArr = productArr.map( function(product) {
+		return buildCard(product)
+	})
+	console.log("cardArr ready to go into DOM", cardArr);
+	cardArr.forEach( function(card) {
+		let cardWrapper = document.createElement("article");
+		cardWrapper.innerHTML = card;
+		productWrapper.appendChild(cardWrapper);
+	});
+}
 // get products
 
 		// inside this loop we need to loop again, but this time through the categories
@@ -16,16 +30,21 @@ function buildDOMObj() {
 		let categoryItem = categories.filter( function(category) {
 			return category.id === currentProduct.category_id;
 		})
-		let prodObj = {dept: categoryItem[0].name}
-		console.log("prod object", prodObj);
-		return prodObj 
+		let prodObj = {
+			dept: categoryItem[0].name,
+			name: currentProduct.name,
+			price: currentProduct.price,
+			catId: currentProduct.category_id
+		}
+		return prodObj
 	});
 // For now, just see if map worked
 console.log("prod arr", productArr);
-};
+displayProducts(productArr)
+}
 
 function buildCard(prodObj) {
-	let card = `<div class="prodCard">
+	let card = `<div class="prodCard" data-catId="${prodObj.catId}">
 								<h2>${prodObj.name}</h2>
 								<h3>${prodObj.dept}</h3>
 								<p>${prodObj.price}</p>
